@@ -1,0 +1,101 @@
+table Energy_Costs_Savings
+	lineageTag: 3ee2976d-042b-4cd4-8670-9333234203ff
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: c01f337a-d3fd-4c5b-bf2b-25476d6c7c92
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		lineageTag: e5db0356-0efd-401c-ab63-8b7a0bdbf325
+		summarizeBy: none
+		sourceColumn: Month
+
+	column Season
+		dataType: string
+		lineageTag: 9fb01cfb-74d0-4ef4-8f59-1065f71ef0ae
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Total_Consumed_kWh
+		dataType: int64
+		lineageTag: 66245a5c-530f-47c6-a7fa-5635eca92d6f
+		summarizeBy: none
+		sourceColumn: Total_Consumed_kWh
+
+	column PV_Produced_kWh
+		dataType: double
+		lineageTag: fd326891-f9b2-40ea-b399-865bb10c9bfd
+		summarizeBy: none
+		sourceColumn: PV_Produced_kWh
+
+	column PV_Self_Consumed_kWh
+		dataType: double
+		lineageTag: a1de2c60-cef7-4edc-8c20-82834ca560ef
+		summarizeBy: none
+		sourceColumn: PV_Self_Consumed_kWh
+
+	column Grid_Purchased_kWh
+		dataType: double
+		lineageTag: 3684605c-7e88-4d41-bd44-acf061fa4848
+		summarizeBy: none
+		sourceColumn: Grid_Purchased_kWh
+
+	column Self_Sufficiency_Rate_pct
+		dataType: double
+		lineageTag: efc0145e-1bb6-4687-9606-bb8ff61c909f
+		summarizeBy: none
+		sourceColumn: Self_Sufficiency_Rate_pct
+
+	column Blended_Tariff_CAD_kWh
+		dataType: double
+		lineageTag: fa766a17-eb4e-49eb-9523-863c52a19613
+		summarizeBy: none
+		sourceColumn: Blended_Tariff_CAD_kWh
+
+	column Grid_Cost_CAD
+		dataType: double
+		lineageTag: 2e7e12ab-4910-46f0-97d5-103cf53dee42
+		summarizeBy: none
+		sourceColumn: Grid_Cost_CAD
+
+	column PV_Savings_CAD
+		dataType: double
+		lineageTag: fd0cb915-5829-4c87-8ae4-089c92857de6
+		summarizeBy: none
+		sourceColumn: PV_Savings_CAD
+
+	column Total_Energy_Cost_CAD
+		dataType: double
+		lineageTag: d4af2ac0-3217-4b79-b90e-7f5ecb7c06df
+		summarizeBy: none
+		sourceColumn: Total_Energy_Cost_CAD
+
+	column Target_Self_Sufficiency_pct
+		dataType: int64
+		lineageTag: c99d872f-64d0-41c2-85dd-6cf94f86a494
+		summarizeBy: none
+		sourceColumn: Target_Self_Sufficiency_pct
+
+	column Gap_vs_Target_pct
+		dataType: double
+		lineageTag: 62427a11-e9f5-455c-8590-676b73c34342
+		summarizeBy: none
+		sourceColumn: Gap_vs_Target_pct
+
+	partition Energy_Costs_Savings = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="Energy_Costs_Savings",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Month", type text}, {"Season", type text}, {"Total_Consumed_kWh", Int64.Type}, {"PV_Produced_kWh", type number}, {"PV_Self_Consumed_kWh", type number}, {"Grid_Purchased_kWh", type number}, {"Self_Sufficiency_Rate_pct", type number}, {"Blended_Tariff_CAD_kWh", type number}, {"Grid_Cost_CAD", type number}, {"PV_Savings_CAD", type number}, {"Total_Energy_Cost_CAD", type number}, {"Target_Self_Sufficiency_pct", Int64.Type}, {"Gap_vs_Target_pct", type number}}, "en-US")
+				in
+					Typed
+

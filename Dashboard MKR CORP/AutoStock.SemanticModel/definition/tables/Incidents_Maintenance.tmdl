@@ -1,0 +1,95 @@
+table Incidents_Maintenance
+	lineageTag: d8b06bda-6983-493b-aeef-e8bedbd827b5
+
+	column Incident_ID
+		dataType: string
+		lineageTag: 85cc8687-23eb-4d9a-bde4-d440f7eed741
+		summarizeBy: none
+		sourceColumn: Incident_ID
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: b1c54846-ead3-4351-ada2-073a8870c8f5
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		lineageTag: 8f3a9443-377a-41c0-a2d2-b2acaa7ad242
+		summarizeBy: none
+		sourceColumn: Month
+
+	column Season
+		dataType: string
+		lineageTag: aa24d226-1612-4b60-a76f-a4c4fa1b9df7
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Incident_Type
+		dataType: string
+		lineageTag: 5470be5a-e3ba-4134-ac40-4a218bee6d8d
+		summarizeBy: none
+		sourceColumn: Incident_Type
+
+	column Asset_Category
+		dataType: string
+		lineageTag: 724393df-bfaf-4b78-8925-6b4df7f0e253
+		summarizeBy: none
+		sourceColumn: Asset_Category
+
+	column Severity
+		dataType: string
+		lineageTag: f69b34eb-1d39-4592-aaa5-3299ffccf8ec
+		summarizeBy: none
+		sourceColumn: Severity
+
+	column Category
+		dataType: string
+		lineageTag: a7bfdf42-ba38-4cde-87f8-5b3d0e17a6fc
+		summarizeBy: none
+		sourceColumn: Category
+
+	column Duration_Hours
+		dataType: double
+		lineageTag: 86d466eb-34c6-407a-833a-a4c5c4fd0787
+		summarizeBy: none
+		sourceColumn: Duration_Hours
+
+	column Resolved_Same_Day
+		dataType: boolean
+		lineageTag: 5da154f3-1d5d-4db7-9627-439cfed500fd
+		summarizeBy: none
+		sourceColumn: Resolved_Same_Day
+
+	column Maintenance_Cost_CAD
+		dataType: int64
+		lineageTag: f9c157b5-e23b-4deb-81d0-9ffb0ec426e3
+		summarizeBy: none
+		sourceColumn: Maintenance_Cost_CAD
+
+	column Weather_at_Incident
+		dataType: string
+		lineageTag: d897acdf-f3fc-42a3-98e1-50d00e4a47ee
+		summarizeBy: none
+		sourceColumn: Weather_at_Incident
+
+	column Temperature_C
+		dataType: double
+		lineageTag: 615dee2d-0487-4ede-a1f0-3b0d79e68e68
+		summarizeBy: none
+		sourceColumn: Temperature_C
+
+	partition Incidents_Maintenance = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="Incidents_Maintenance",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Incident_ID", type text}, {"Date", type date}, {"Month", type text}, {"Season", type text}, {"Incident_Type", type text}, {"Asset_Category", type text}, {"Severity", type text}, {"Category", type text}, {"Duration_Hours", type number}, {"Resolved_Same_Day", type logical}, {"Maintenance_Cost_CAD", Int64.Type}, {"Weather_at_Incident", type text}, {"Temperature_C", type number}}, "en-US")
+				in
+					Typed
+

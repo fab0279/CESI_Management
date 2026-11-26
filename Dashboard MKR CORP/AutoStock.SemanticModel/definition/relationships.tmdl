@@ -1,0 +1,24 @@
+relationship 718d5c0d-3d8f-4f12-af2f-9aad6c3a34ea
+	fromColumn: Vehicle_Flows.Date
+	toColumn: Calendar.Date
+
+relationship bbe2ab7f-01be-413d-8e07-ce212e5cb223
+	fromColumn: Charging_Logs.Date
+	toColumn: Calendar.Date
+
+relationship 95c08c3e-5170-402e-862a-0ed8ce3bfd81
+	fromColumn: PV_Daily.Date
+	toColumn: Calendar.Date
+
+relationship 54a2de54-a3ea-456c-86ca-d045015350cc
+	fromColumn: PV_Hourly_Clusters.Date
+	toColumn: Calendar.Date
+
+relationship fc80c1ae-1137-4f15-9320-f5f4ac283437
+	fromColumn: Incidents_Maintenance.Date
+	toColumn: Calendar.Date
+
+relationship 7c2ed964-a9a5-40fe-8ddc-50861fa0b315
+	fromColumn: Energy_Costs_Savings.Date
+	toColumn: Calendar.Date
+

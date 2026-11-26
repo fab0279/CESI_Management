@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "AutoStock"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7fafd0fb-2533-4168-9e3a-3503ca196862"
+  }
+}

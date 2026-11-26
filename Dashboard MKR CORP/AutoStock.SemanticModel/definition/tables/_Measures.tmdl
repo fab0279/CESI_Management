@@ -1,0 +1,130 @@
+table _Measures
+	lineageTag: 64c5138b-a14b-4e72-a9e7-b52094b01957
+
+	measure 'Vehicles arrived' = SUM(Vehicle_Flows[Total_Arrivals])
+		formatString: #,0
+		lineageTag: 214225b6-e226-47e7-9f3c-576e4ee0e64a
+
+	measure 'Vehicles departed' = SUM(Vehicle_Flows[Total_Departures])
+		formatString: #,0
+		lineageTag: 96523b81-7a50-45d7-9a8d-d2f108a131b2
+
+	measure 'Gate A entries' = SUM(Vehicle_Flows[Vehicles_Entry_Gate_A])
+		formatString: #,0
+		lineageTag: 37d3afe2-5994-49d3-b0cd-a8580126502b
+
+	measure 'Gate B entries' = SUM(Vehicle_Flows[Vehicles_Entry_Gate_B])
+		formatString: #,0
+		lineageTag: 059dc8bf-4e19-4421-a123-aec68959376e
+
+	measure 'Avg vehicles on site (EOD)' = AVERAGE(Vehicle_Flows[Vehicles_On_Site_EOD])
+		formatString: 0.0
+		lineageTag: 5098d0e8-75a5-40d7-aa0e-6fcdecb93b2a
+
+	measure 'Avg storage duration (days)' = AVERAGE(Vehicle_Flows[Avg_Storage_Duration_days])
+		formatString: 0.0
+		lineageTag: 88f71b2f-85b0-411f-a83a-8709ed981e46
+
+	measure 'Dispatched without full charge' = SUM(Vehicle_Flows[Dispatched_Without_Full_Charge])
+		formatString: #,0
+		lineageTag: f3646f56-bdae-4393-9d4f-1d3f73f2ce8a
+
+	measure '% dispatched without full charge' = DIVIDE([Dispatched without full charge],[Vehicles departed])
+		formatString: 0.0%
+		lineageTag: c869846c-8128-4b31-9c2b-75c8fcef90b8
+
+	measure 'Energy consumed (MWh)' = SUM(Energy_Costs_Savings[Total_Consumed_kWh])/1000
+		formatString: #,0
+		lineageTag: 119d3498-8455-45e2-ad19-e4f087b33469
+
+	measure 'PV production (MWh)' = SUM(Energy_Costs_Savings[PV_Produced_kWh])/1000
+		formatString: #,0
+		lineageTag: 7b6e2053-e9ca-4003-87a4-07f5559687a2
+
+	measure 'Self-sufficiency %' = DIVIDE(SUM(Energy_Costs_Savings[PV_Produced_kWh]),SUM(Energy_Costs_Savings[Total_Consumed_kWh]))
+		formatString: 0.0%
+		lineageTag: 9ebf0d7c-72fe-47c5-b879-afd15098589d
+
+	measure 'Target self-sufficiency %' = AVERAGE(Energy_Costs_Savings[Target_Self_Sufficiency_pct])/100
+		formatString: 0%
+		lineageTag: 20cbad91-0ea6-4e97-b1b2-5c660ab9aee9
+
+	measure 'Gap vs target (pts)' = ([Self-sufficiency %]-[Target self-sufficiency %])*100
+		formatString: 0.0
+		lineageTag: f43f10e8-5193-4062-b659-a0db7dfa96b4
+
+	measure 'Grid cost (CAD)' = SUM(Energy_Costs_Savings[Total_Energy_Cost_CAD])
+		formatString: #,0
+		lineageTag: 09ec59f2-7381-4e93-8288-4dbf947cd106
+
+	measure 'PV savings (CAD)' = SUM(Energy_Costs_Savings[PV_Savings_CAD])
+		formatString: #,0
+		lineageTag: 7dfd6835-3a0e-4ca3-9985-360274618e13
+
+	measure 'AC utilization %' = AVERAGE(Charging_Logs[AC_Utilization_pct])/100
+		formatString: 0.0%
+		lineageTag: 4eef45e8-ba18-4ba9-8407-9633c33080c3
+
+	measure 'DC utilization %' = AVERAGE(Charging_Logs[DC_Utilization_pct])/100
+		formatString: 0.0%
+		lineageTag: 59ed4ad1-a277-4293-b713-7c15bd742ab9
+
+	measure 'AC sessions' = SUM(Charging_Logs[AC_Sessions])
+		formatString: #,0
+		lineageTag: 72af4223-a9b7-45ad-8df4-2a93226889b3
+
+	measure 'DC sessions' = SUM(Charging_Logs[DC_Sessions])
+		formatString: #,0
+		lineageTag: b08dea46-2e4a-4e8b-bdc2-b2bf0f98e92d
+
+	measure 'Charging sessions' = [AC sessions]+[DC sessions]
+		formatString: #,0
+		lineageTag: a7b9650c-6819-47ed-83cb-680ecc24f176
+
+	measure 'AC faults' = SUM(Charging_Logs[AC_Faults])
+		formatString: #,0
+		lineageTag: 9cdfe229-d455-4a4b-b91e-55aacc430242
+
+	measure 'DC faults' = SUM(Charging_Logs[DC_Faults])
+		formatString: #,0
+		lineageTag: 584b7c8d-aaa5-4b07-8534-ad4712ef1463
+
+	measure 'Charger faults' = [AC faults]+[DC faults]
+		formatString: #,0
+		lineageTag: c330362f-891f-4a34-9ad7-0b8bd9da7103
+
+	measure Incidents = COUNTROWS(Incidents_Maintenance)
+		formatString: #,0
+		lineageTag: fe8fb0eb-bab5-4a2d-9247-6afe6df23b6e
+
+	measure 'Critical incidents' = CALCULATE([Incidents],Incidents_Maintenance[Severity]="Critical")
+		formatString: #,0
+		lineageTag: 6846038d-a9bd-44ea-a7f9-9a27d8469605
+
+	measure 'Maintenance cost (CAD)' = SUM(Incidents_Maintenance[Maintenance_Cost_CAD])
+		formatString: #,0
+		lineageTag: e91b3474-a556-447b-8ef2-772122988f98
+
+	measure 'Avg incident duration (h)' = AVERAGE(Incidents_Maintenance[Duration_Hours])
+		formatString: 0.0
+		lineageTag: 907fad8b-8a67-4b2c-bb30-87fa86389a93
+
+	measure '% resolved same day' = DIVIDE(CALCULATE([Incidents],Incidents_Maintenance[Resolved_Same_Day]=TRUE()),[Incidents])
+		formatString: 0.0%
+		lineageTag: c66d4909-32ae-4d16-aa1e-d5b39eb08057
+
+	measure 'PV cluster production (kWh)' = SUM(PV_Hourly_Clusters[Production_kWh])
+		formatString: #,0
+		lineageTag: 92da47db-4adf-4239-a008-3fb776c88a19
+
+	column Col
+		dataType: string
+		isHidden
+		lineageTag: 52586743-083c-4d74-ae6a-6c9f66290d0e
+		summarizeBy: none
+		sourceColumn: Col
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Col = text], {})
+

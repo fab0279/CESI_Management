@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Calendar","_Measures","Vehicle_Flows","Charging_Logs","PV_Daily","PV_Hourly_Clusters","Incidents_Maintenance","Energy_Costs_Savings","FilePath"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Calendar
+ref table _Measures
+ref table Vehicle_Flows
+ref table Charging_Logs
+ref table PV_Daily
+ref table PV_Hourly_Clusters
+ref table Incidents_Maintenance
+ref table Energy_Costs_Savings
+

@@ -1,0 +1,83 @@
+table PV_Hourly_Clusters
+	lineageTag: a55805f1-36c6-4767-b20e-80e1a46f4f5b
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 1957051f-966c-4fe2-ac03-7cb1bcb135f8
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Hour
+		dataType: int64
+		lineageTag: 57f15546-fd7c-412a-9639-5ac47aea0116
+		summarizeBy: none
+		sourceColumn: Hour
+
+	column Month
+		dataType: string
+		lineageTag: b0c1c006-dc4e-4dff-9e3b-d8862eee1f0f
+		summarizeBy: none
+		sourceColumn: Month
+
+	column Season
+		dataType: string
+		lineageTag: e410a8a1-af1d-498f-b62a-46278dbfa19c
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Weather
+		dataType: string
+		lineageTag: 703c55f9-1433-40d8-94d3-aa4beb61a06b
+		summarizeBy: none
+		sourceColumn: Weather
+
+	column Cluster_ID
+		dataType: string
+		lineageTag: 54820c57-fdce-49af-babb-bdaa4dac9e25
+		summarizeBy: none
+		sourceColumn: Cluster_ID
+
+	column Cluster_Capacity_kWp
+		dataType: int64
+		lineageTag: 5d75b1a4-c05b-4c92-a825-2bffcd2e474d
+		summarizeBy: none
+		sourceColumn: Cluster_Capacity_kWp
+
+	column Orientation
+		dataType: string
+		lineageTag: ea9cb8ae-a907-4a9e-adb9-1a341afa7573
+		summarizeBy: none
+		sourceColumn: Orientation
+
+	column Production_kWh
+		dataType: double
+		lineageTag: 9f95cf00-5bde-4341-9673-86b9e1811457
+		summarizeBy: none
+		sourceColumn: Production_kWh
+
+	column Tariff_CAD_kWh
+		dataType: double
+		lineageTag: 07839f92-c514-4d26-9bbc-6d9938fe27a0
+		summarizeBy: none
+		sourceColumn: Tariff_CAD_kWh
+
+	column PV_Value_CAD
+		dataType: double
+		lineageTag: 4956c37c-dfa9-4480-8b4d-7c0a5fb7a531
+		summarizeBy: none
+		sourceColumn: PV_Value_CAD
+
+	partition PV_Hourly_Clusters = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="PV_Hourly_Clusters",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Hour", Int64.Type}, {"Month", type text}, {"Season", type text}, {"Weather", type text}, {"Cluster_ID", type text}, {"Cluster_Capacity_kWp", Int64.Type}, {"Orientation", type text}, {"Production_kWh", type number}, {"Tariff_CAD_kWh", type number}, {"PV_Value_CAD", type number}}, "en-US")
+				in
+					Typed
+

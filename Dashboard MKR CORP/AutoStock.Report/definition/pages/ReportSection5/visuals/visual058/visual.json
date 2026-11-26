@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "visual058",
+  "position": {
+    "x": 650,
+    "y": 168,
+    "z": 58000,
+    "height": 260,
+    "width": 610,
+    "tabOrder": 58000
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incidents_Maintenance"
+                    }
+                  },
+                  "Property": "Asset_Category"
+                }
+              },
+              "queryRef": "Incidents_Maintenance.Asset_Category",
+              "nativeQueryRef": "Asset_Category",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Maintenance cost (CAD)"
+                }
+              },
+              "queryRef": "_Measures.Maintenance cost (CAD)",
+              "nativeQueryRef": "Maintenance cost (CAD)"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Maintenance cost by asset category'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "visual047",
+  "position": {
+    "x": 650,
+    "y": 168,
+    "z": 47000,
+    "height": 260,
+    "width": 610,
+    "tabOrder": 47000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "PV_Hourly_Clusters"
+                    }
+                  },
+                  "Property": "Orientation"
+                }
+              },
+              "queryRef": "PV_Hourly_Clusters.Orientation",
+              "nativeQueryRef": "Orientation",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "PV cluster production (kWh)"
+                }
+              },
+              "queryRef": "_Measures.PV cluster production (kWh)",
+              "nativeQueryRef": "PV cluster production (kWh)"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Production by orientation (kWh)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

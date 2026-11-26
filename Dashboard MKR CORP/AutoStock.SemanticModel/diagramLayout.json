@@ -1,0 +1,126 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 988.75974564878118,
+            "y": 347.84101367483686
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "64c5138b-a14b-4e72-a9e7-b52094b01957",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 388.76986488649982,
+            "y": 323.45539259517705
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "811c2c28-f09f-4098-8c2c-58291f58653a",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 470.57256153670255,
+            "y": 645.68202734967372
+          },
+          "nodeIndex": "Charging_Logs",
+          "nodeLineageTag": "244cc8d6-ac4d-4de0-9f04-5968700a8b5e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.18544656844279,
+            "y": -50
+          },
+          "nodeIndex": "Energy_Costs_Savings",
+          "nodeLineageTag": "3ee2976d-042b-4cd4-8670-9333234203ff",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 104.57572104656265,
+            "y": 543.61670686464845
+          },
+          "nodeIndex": "Incidents_Maintenance",
+          "nodeLineageTag": "d8b06bda-6983-493b-aeef-e8bedbd827b5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 754.75974564878106,
+            "y": 427.71394448737777
+          },
+          "nodeIndex": "PV_Daily",
+          "nodeLineageTag": "a0970e87-c8e3-420a-a5dc-d10946c6f90a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 193.36735708520303
+          },
+          "nodeIndex": "PV_Hourly_Clusters",
+          "nodeLineageTag": "a55805f1-36c6-4767-b20e-80e1a46f4f5b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 672.95591051121676,
+            "y": 55.362616210530859
+          },
+          "nodeIndex": "Vehicle_Flows",
+          "nodeLineageTag": "bb9394ea-0510-4304-a2dd-124b64cccdcf",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Toutes les tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Toutes les tables",
+  "defaultDiagram": "Toutes les tables"
+}

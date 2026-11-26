@@ -1,0 +1,103 @@
+table Vehicle_Flows
+	lineageTag: bb9394ea-0510-4304-a2dd-124b64cccdcf
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 5c83f1a6-f797-4ce6-b826-5729dfc54ee3
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		lineageTag: 2a19e807-eca9-4fba-a970-d4c2717cb230
+		summarizeBy: none
+		sourceColumn: Month
+
+	column Day_of_Week
+		dataType: string
+		lineageTag: 946cba85-213e-49f1-bbb5-64e0abab90ed
+		summarizeBy: none
+		sourceColumn: Day_of_Week
+
+	column Day_Type
+		dataType: string
+		lineageTag: 500c8ee4-f8c8-4520-80ed-81df37ca733c
+		summarizeBy: none
+		sourceColumn: Day_Type
+
+	column Season
+		dataType: string
+		lineageTag: ebfc7c29-e330-4c9b-bf99-bbde88e008a6
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Temperature_C
+		dataType: double
+		lineageTag: fda77ec7-36a8-47ae-afcd-89c4c2297332
+		summarizeBy: none
+		sourceColumn: Temperature_C
+
+	column Weather
+		dataType: string
+		lineageTag: eacb16b5-a393-44a2-bb6d-322d85900786
+		summarizeBy: none
+		sourceColumn: Weather
+
+	column Vehicles_Entry_Gate_A
+		dataType: int64
+		lineageTag: d7518f69-303e-419d-9986-f5fd4772a7aa
+		summarizeBy: none
+		sourceColumn: Vehicles_Entry_Gate_A
+
+	column Vehicles_Entry_Gate_B
+		dataType: int64
+		lineageTag: 508b18d5-d49e-4e63-a21b-350f271cc239
+		summarizeBy: none
+		sourceColumn: Vehicles_Entry_Gate_B
+
+	column Total_Arrivals
+		dataType: int64
+		lineageTag: 61a8f9f1-bf83-43bd-bb75-1dce91814c22
+		summarizeBy: none
+		sourceColumn: Total_Arrivals
+
+	column Total_Departures
+		dataType: int64
+		lineageTag: 9361b039-5b33-407a-9d96-f24140849214
+		summarizeBy: none
+		sourceColumn: Total_Departures
+
+	column Vehicles_On_Site_EOD
+		dataType: int64
+		lineageTag: 66b467bb-a7d1-4afa-8ae7-3e49876ed023
+		summarizeBy: none
+		sourceColumn: Vehicles_On_Site_EOD
+
+	column Dispatched_Without_Full_Charge
+		dataType: int64
+		lineageTag: 42fddf04-9140-45c7-8df7-90a27d2a6846
+		summarizeBy: none
+		sourceColumn: Dispatched_Without_Full_Charge
+
+	column Avg_Storage_Duration_days
+		dataType: double
+		lineageTag: b90e8b16-5321-48a1-8ba8-dfc482ed4b73
+		summarizeBy: none
+		sourceColumn: Avg_Storage_Duration_days
+
+	partition Vehicle_Flows = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="Vehicle_Flows",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Month", type text}, {"Day_of_Week", type text}, {"Day_Type", type text}, {"Season", type text}, {"Temperature_C", type number}, {"Weather", type text}, {"Vehicles_Entry_Gate_A", Int64.Type}, {"Vehicles_Entry_Gate_B", Int64.Type}, {"Total_Arrivals", Int64.Type}, {"Total_Departures", Int64.Type}, {"Vehicles_On_Site_EOD", Int64.Type}, {"Dispatched_Without_Full_Charge", Int64.Type}, {"Avg_Storage_Duration_days", type number}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table
+

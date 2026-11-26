@@ -1,0 +1,5 @@
+expression FilePath = "C:\Users\cbuqu\Downloads\AutoStock_PowerBI_EN\AutoStock_PowerBI_EN\AutoStock_Detroit_Dataset.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6c90e0c0-8f70-440d-9719-6bd6236358e9
+
+	annotation PBI_ResultType = Text
+

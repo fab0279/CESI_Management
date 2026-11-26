@@ -1,0 +1,59 @@
+table PV_Daily
+	lineageTag: a0970e87-c8e3-420a-a5dc-d10946c6f90a
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 1725bf9f-affa-4ce5-9280-881ac42e060b
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		lineageTag: ea87becd-4639-425d-a3ab-de1f877f157d
+		summarizeBy: none
+		sourceColumn: Month
+
+	column Season
+		dataType: string
+		lineageTag: 9328a064-f0ca-476a-9ebf-cbd3545994b9
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Weather
+		dataType: string
+		lineageTag: 19844103-31a9-4ef8-8cdd-4d52d3562129
+		summarizeBy: none
+		sourceColumn: Weather
+
+	column Temperature_C
+		dataType: double
+		lineageTag: 6e7f72ea-8352-4500-b58d-fc7dc9345b91
+		summarizeBy: none
+		sourceColumn: Temperature_C
+
+	column Total_PV_Production_kWh
+		dataType: double
+		lineageTag: 9324dda2-50b1-4a32-a351-82035be7e6df
+		summarizeBy: none
+		sourceColumn: Total_PV_Production_kWh
+
+	column PV_Savings_CAD
+		dataType: double
+		lineageTag: c199a2c2-8ada-4b7b-b379-892db3b91de9
+		summarizeBy: none
+		sourceColumn: PV_Savings_CAD
+
+	partition PV_Daily = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="PV_Daily",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Month", type text}, {"Season", type text}, {"Weather", type text}, {"Temperature_C", type number}, {"Total_PV_Production_kWh", type number}, {"PV_Savings_CAD", type number}}, "en-US")
+				in
+					Typed
+

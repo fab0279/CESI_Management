@@ -1,0 +1,125 @@
+table Charging_Logs
+	lineageTag: 244cc8d6-ac4d-4de0-9f04-5968700a8b5e
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 6d51e5eb-0d48-49dc-97ad-8c4990c953e2
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Day_Type
+		dataType: string
+		lineageTag: 0b2d27f5-9ab8-4154-9484-bd055d163bd1
+		summarizeBy: none
+		sourceColumn: Day_Type
+
+	column Season
+		dataType: string
+		lineageTag: 78941904-f6f7-4e82-be3a-4d92b3cfb204
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Temperature_C
+		dataType: double
+		lineageTag: 44e1eb00-b2bb-4de4-9861-c7cf234cc0b7
+		summarizeBy: none
+		sourceColumn: Temperature_C
+
+	column AC_Stations
+		dataType: int64
+		lineageTag: 1162d176-85a6-4af6-8d50-c400c11c9c86
+		summarizeBy: none
+		sourceColumn: AC_Stations
+
+	column AC_Sessions
+		dataType: int64
+		lineageTag: dff74653-9ff4-4044-812d-019ca32718f8
+		summarizeBy: none
+		sourceColumn: AC_Sessions
+
+	column AC_Energy_kWh
+		dataType: int64
+		lineageTag: df036f3f-a405-4714-ada4-0062d8c8a799
+		summarizeBy: none
+		sourceColumn: AC_Energy_kWh
+
+	column AC_Faults
+		dataType: int64
+		lineageTag: 5d02b16b-7756-4586-82df-d35b1612a426
+		summarizeBy: none
+		sourceColumn: AC_Faults
+
+	column AC_Utilization_pct
+		dataType: double
+		lineageTag: 63c15f88-4d87-4aa5-99f5-b5be1cdbe4ef
+		summarizeBy: none
+		sourceColumn: AC_Utilization_pct
+
+	column DC_Stations
+		dataType: int64
+		lineageTag: d33c4348-0a2b-4da4-ba31-7aaf52e99e3f
+		summarizeBy: none
+		sourceColumn: DC_Stations
+
+	column DC_Sessions
+		dataType: int64
+		lineageTag: d42e04c8-5d02-456c-96de-410dfc674f3a
+		summarizeBy: none
+		sourceColumn: DC_Sessions
+
+	column DC_Energy_kWh
+		dataType: int64
+		lineageTag: 129eca8f-d292-4a11-b61d-6679a232644a
+		summarizeBy: none
+		sourceColumn: DC_Energy_kWh
+
+	column DC_Faults
+		dataType: int64
+		lineageTag: a096b68b-f5e2-4c0c-a23d-5a9c0894114f
+		summarizeBy: none
+		sourceColumn: DC_Faults
+
+	column DC_Utilization_pct
+		dataType: double
+		lineageTag: dda3a767-9b85-464a-b801-bb320897ef1e
+		summarizeBy: none
+		sourceColumn: DC_Utilization_pct
+
+	column Total_Energy_Consumed_kWh
+		dataType: int64
+		lineageTag: 72278add-3973-425a-af7c-e78c0273d845
+		summarizeBy: none
+		sourceColumn: Total_Energy_Consumed_kWh
+
+	column Grid_Energy_kWh
+		dataType: int64
+		lineageTag: 2a29094b-aa0d-4e3c-8925-b65bbcebc0fa
+		summarizeBy: none
+		sourceColumn: Grid_Energy_kWh
+
+	column Blended_Tariff_CAD_kWh
+		dataType: double
+		lineageTag: 7768879b-bda5-4ef9-a69e-d9996493a4dd
+		summarizeBy: none
+		sourceColumn: Blended_Tariff_CAD_kWh
+
+	column Energy_Cost_CAD
+		dataType: double
+		lineageTag: 1c16f47a-599d-4ae8-a9ad-164efdd44274
+		summarizeBy: none
+		sourceColumn: Energy_Cost_CAD
+
+	partition Charging_Logs = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(FilePath), null, true),
+					Raw = Source{[Item="Charging_Logs",Kind="Sheet"]}[Data],
+					Promoted = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Day_Type", type text}, {"Season", type text}, {"Temperature_C", type number}, {"AC_Stations", Int64.Type}, {"AC_Sessions", Int64.Type}, {"AC_Energy_kWh", Int64.Type}, {"AC_Faults", Int64.Type}, {"AC_Utilization_pct", type number}, {"DC_Stations", Int64.Type}, {"DC_Sessions", Int64.Type}, {"DC_Energy_kWh", Int64.Type}, {"DC_Faults", Int64.Type}, {"DC_Utilization_pct", type number}, {"Total_Energy_Consumed_kWh", Int64.Type}, {"Grid_Energy_kWh", Int64.Type}, {"Blended_Tariff_CAD_kWh", type number}, {"Energy_Cost_CAD", type number}}, "en-US")
+				in
+					Typed
+

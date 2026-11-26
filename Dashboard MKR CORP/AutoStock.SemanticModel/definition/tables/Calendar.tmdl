@@ -1,0 +1,70 @@
+table Calendar
+	lineageTag: 811c2c28-f09f-4098-8c2c-58291f58653a
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: dd/MM/yyyy
+		lineageTag: 18684c78-5f2b-4700-bb44-94871ed171b5
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Season
+		dataType: string
+		lineageTag: b57d58dc-4b0f-4be8-ba88-d00fa0125c1e
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Day_Type
+		dataType: string
+		lineageTag: cb982f4a-8691-4c4e-8a8c-8f3c5ec347a2
+		summarizeBy: none
+		sourceColumn: Day_Type
+
+	column Weather
+		dataType: string
+		lineageTag: dba82ba2-9617-4d20-8191-3cf0fcc3941e
+		summarizeBy: none
+		sourceColumn: Weather
+
+	column Day_of_Week
+		dataType: string
+		lineageTag: e82a5658-7b00-4bbb-9941-3065a2cbb9ba
+		summarizeBy: none
+		sourceColumn: Day_of_Week
+		sortByColumn: Day_Num
+
+	column Month
+		dataType: string
+		lineageTag: 7a84ec98-e974-410e-8b54-6cf364453d33
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: Month_Num
+
+	column Month_Num
+		dataType: int64
+		lineageTag: e7f35ccc-1476-4c90-9ecc-cea11c3b2102
+		summarizeBy: none
+		sourceColumn: Month_Num
+
+	column Day_Num
+		dataType: int64
+		lineageTag: e3fb0ecd-9b41-45b8-b594-6613bf18cbad
+		summarizeBy: none
+		sourceColumn: Day_Num
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+					Source = Table.SelectColumns(Vehicle_Flows, {"Date","Season","Day_Type","Weather","Day_of_Week"}),
+					D = Table.Distinct(Source, {"Date"}),
+					A = Table.AddColumn(D, "Month_Num", each Date.Month([Date]), Int64.Type),
+					B = Table.AddColumn(A, "Day_Num", each Date.DayOfWeek([Date], Day.Monday) + 1, Int64.Type),
+					C = Table.AddColumn(B, "Month", each Text.Proper(Date.ToText([Date], "MMM", "en-US")), type text)
+				in
+					C
+
